@@ -1359,6 +1359,21 @@ pyarrow = ">=5"
 embed = ["vegafusion-python-embed (==1.6.5)", "vl-convert-python (>=0.7.0)"]
 
 [[package]]
+name = "vl-convert-python"
+version = "1.2.3"
+description = "Convert Vega-Lite chart specifications to SVG, PNG, or Vega"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "vl_convert_python-1.2.3-cp37-abi3-macosx_10_12_x86_64.whl", hash = "sha256:4d52a3006aa82f950ecc058a76694a76e6e279b84a4144bd28971b408c0974fa"},
+    {file = "vl_convert_python-1.2.3-cp37-abi3-macosx_11_0_arm64.whl", hash = "sha256:2adec7f87bea3a15a991e7a28642c2758ca224cb78d024b1d47e00f02fd9c97f"},
+    {file = "vl_convert_python-1.2.3-cp37-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:2c37b349689d83ccc449a0063ff3804fe28d21c103cfa36e284882ee1d128de2"},
+    {file = "vl_convert_python-1.2.3-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:b1603d158037a06b5d3a8d9f61e83eb56949dfab2f9ed9b6dd2b0811565afdea"},
+    {file = "vl_convert_python-1.2.3-cp37-abi3-win_amd64.whl", hash = "sha256:9fcce91a2dbe2168bc7e081851f376b52987b4a4abe25a99ed731684bed4a5a2"},
+    {file = "vl_convert_python-1.2.3.tar.gz", hash = "sha256:1adeaa46041ccff47fee0119b136f5e12211d56726a142fc78cb14ad3c141e09"},
+]
+
+[[package]]
 name = "xgboost"
 version = "2.0.3"
 description = "XGBoost Python Package"
@@ -1388,4 +1403,4 @@ scikit-learn = ["scikit-learn"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11.9"
-content-hash = "dcc2875db51724ba1f9ae4fb991b0dfb61993d03a6d3c4d0f6614c2bb4bf4627"
+content-hash = "2b4c3256aebe2f56e98692f42a73ed45f0554472c9d193ff7320eb3db0a3c9de"
