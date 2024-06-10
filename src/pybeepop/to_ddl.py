@@ -5,6 +5,20 @@ import mysql.connector
 def init_tables(output_sql_file):
     """
     initialize the tables
+
+    Parameters:
+    -----------
+    output_sql_file : str
+        File path to store the sql file.
+
+    Returns: 
+    -----------
+    bool
+        True if the file can be located and correctly writen.
+
+    Examples:
+    -----------
+    >>> init_tables("scripts/output.sql")
     """
     with open(output_sql_file, 'w') as outfile:
         outfile.write(f"SET FOREIGN_KEY_CHECKS=0; \n")
@@ -35,6 +49,23 @@ def init_tables(output_sql_file):
 def create_sql_MonitorStation(input_csv_file, output_sql_file):
     """
     insert processed data into the MonitorStation table 
+
+    Parameters: 
+    ----------- 
+    input_csv_file : str
+        File path to where the temperature csv is stored
+
+    output_sql_file : str
+        File path to where the output sql is stored
+
+    Returns:
+    -----------
+    bool
+        True if both files can be located and correctly writen, false otherwise.
+
+    Examples: 
+    -----------
+    >>> create_sql_MonitorStation("data/processed/average_monthly_temperature_by_state_1950-2022.csv", "scripts/output.sql")
     """
     try:
         with open(input_csv_file, 'r', newline='') as csvfile, open(output_sql_file, 'a') as outfile:
@@ -62,6 +93,23 @@ def create_sql_MonitorStation(input_csv_file, output_sql_file):
 def create_sql_Bee(input_csv_file3, output_sql_file):
     """
     insert processed data into the Bee table 
+
+    Parameters: 
+    ----------- 
+    input_csv_files : str
+        File path to where the bee csv is stored.
+
+    output_sql_file : str
+        File path to where the output sql is stored.
+
+    Returns:
+    -----------
+    bool
+        True if both files can be located and correctly writen, false otherwise.
+
+    Examples: 
+    -----------
+    >>> create_sql_Bee("data/processed/save_the_bees.csv", "scripts/output.sql")
     """
     try:
         with open(input_csv_file3) as csvfile, open(output_sql_file, mode='a') as outfile:
@@ -92,6 +140,25 @@ def create_sql_Bee(input_csv_file3, output_sql_file):
 def create_sql_detect(monitor_csv_file, bee_csv_file, output_sql_file):
     """
     insert processed data into the Detect table 
+
+    Parameters: 
+    ----------- 
+    monitor_csv_file : str
+        File path to where the temperature csv is stored.
+
+    bee_csv_file : str
+        File path to where the bee csv is stored.
+
+    output_sql_file : str
+        File path to where the output sql is stored.
+
+    Returns:
+    -----------
+    bool
+        True if all the files mentioned above can be located and correctly writen, false otherwise.
+
+    Examples:
+    >>> create_sql_detect("data/processed/average_monthly_temperature_by_state_1950-2022.csv", "data/processed/save_the_bees.csv", "scripts/output.sql")
     """
     monitor_data = []
     bee_data = []
@@ -143,6 +210,22 @@ def create_sql_detect(monitor_csv_file, bee_csv_file, output_sql_file):
 def create_sql_GasConditions(input_csv_file4, output_sql_file):
     """
     insert processed data into the GasConditions table 
+
+    Parameters: 
+    ----------- 
+    input_csv_file4 : str
+        File path to where the pollution csv is stored.
+
+    output_sql_file : str
+        File path to where the output sql is stored.
+
+    Returns:
+    -----------
+    bool
+        True if both input files can be located and correctly writen, false otherwise.
+
+    Examples:
+    >>> create_sql_GasConditions("data/processed/pollution_2000_2021.csv", "scripts/output.sql")
     """
     try:
         with open(input_csv_file4) as csvfile, open(output_sql_file, mode='a') as outfile:
@@ -168,6 +251,26 @@ def create_sql_GasConditions(input_csv_file4, output_sql_file):
 def create_sql_Influence(gas_csv_file, bee_csv_file, output_sql_file):
     """
     insert processed data into the Influence table 
+
+    Parameters: 
+    ----------- 
+    gas_csv_file : str
+        File path to where the gas csv is stored.
+
+    bee_csv_file : str
+        File path to where the bee csv is stored.
+
+    output_sql_file : str
+        File path to where the output sql is stored.
+
+    Returns:
+    -----------
+    bool
+        True if all the files mentioned above can be located and correctly writen, false otherwise.
+
+    Examples:
+    -----------
+    >>> create_sql_Influence("data/processed/pollution_2000_2021.csv", "data/processed/save_the_bees.csv", "scripts/output.sql")
     """
     bee_data = []
     try:
@@ -202,6 +305,23 @@ def create_sql_Influence(gas_csv_file, bee_csv_file, output_sql_file):
 def create_sql_RiskFactors(input_csv_file, output_sql_file):
     """
     insert processed data into the RiskFactors table 
+
+    Parameters: 
+    ----------- 
+    input_csv_file : str
+        File path to where the helper csv is stored.
+
+    output_sql_file : str
+        File path to where the output sql is stored.
+
+    Returns:
+    -----------
+    bool
+        True if both files can be located and correctly writen, false otherwise.
+
+    Examples:
+    -----------
+    >>> create_sql_RiskFactors("data/processed/helper.csv", "scripts/output.sql")
     """
     try:
         with open(input_csv_file, 'r') as csvfile, open(output_sql_file, mode='a') as outfile:
@@ -227,6 +347,26 @@ def create_sql_RiskFactors(input_csv_file, output_sql_file):
 def create_sql_Monitor(monitor_csv_file, risk_factors_csv_file, output_sql_file):
     """
     insert processed data into the Monitor table 
+
+    Parameters:
+    -----------
+    monitor_csv_file : str
+        File path to where the temperature csv is stored.
+
+    risk_factors_csv_file : str
+        File path to where the helper csv is stored.
+
+    output_sql_file : str
+        File path to where the output sql is stored.
+        
+    Returns:
+    -----------
+    bool
+        True if all the files mentioned above can be located and correctly writen, false otherwise.
+
+    Examples:
+    -----------
+    >>> create_sql_Monitor("data/processed/average_monthly_temperature_by_state_1950-2022.csv", "data/processed/helper.csv", "scripts/output.sql")
     """
     monitor_data = []
     try:
@@ -260,6 +400,26 @@ def create_sql_Monitor(monitor_csv_file, risk_factors_csv_file, output_sql_file)
 def create_sql_Kill(bee_csv_file, risk_factors_csv_file, output_sql_file):
     """
     insert processed data into the Kill table 
+
+    Parameters:
+    -----------
+    bee_csv_file : str
+        File path to where the bee csv is stored.
+
+    risk_factors_csv_file : str
+        File path to where the helper csv is stored.
+    
+    output_sql_file : str
+        File path to where the output sql is stored.
+
+    Returns:
+    -----------
+    bool
+        True if all the files mentioned above can be located and correctly writen, false otherwise.
+
+    Examples:
+    -----------
+    >>> create_sql_Kill("data/processed/save_the_bees.csv", "data/processed/helper.csv", "scripts/output.sql")
     """
     # Bee data
     bee_data = []
@@ -298,6 +458,23 @@ def create_sql_Kill(bee_csv_file, risk_factors_csv_file, output_sql_file):
 def create_sql_Parasite(input_csv_file, output_sql_file):
     """
     insert processed data into the Parasite table 
+
+    Parameters:
+    -----------
+    input_csv_file : str
+        File path to where the bee csv is stored.
+
+    output_sql_file : str
+        File path to where the output sql is stored.
+
+    Returns:
+    -----------
+    bool
+        True if both files can be located and correctly writen, false otherwise.
+
+    Examples:
+    -----------
+    >>> create_sql_Parasite("data/processed/save_the_bees.csv", "scripts/output.sql")
     """
     try:
         with open(input_csv_file, 'r') as csvfile, open(output_sql_file, mode='a') as outfile:
@@ -324,6 +501,23 @@ def create_sql_Parasite(input_csv_file, output_sql_file):
 def create_sql_Pesticide(input_csv_file, output_sql_file):
     """
     insert processed data into the Pesticide table 
+
+    Parameters:
+    -----------
+    input_csv_file : str
+        File path to where the estimate pesticide usage csv is stored.
+
+    output_csv_file : str
+        File path to where the output sql is stored.
+
+    Returns:
+    -----------
+    bool
+        True if both files can be located and correctly writen, false otherwise.
+    
+    Examples:
+    -----------
+    >>> create_sql_Pesticide()"data/processed/epest_county_estimates.csv", "scripts/output.sql")
     """
     try:
         with open(input_csv_file, 'r') as csvfile, open(output_sql_file, mode='a') as outfile:
@@ -349,6 +543,23 @@ def create_sql_Pesticide(input_csv_file, output_sql_file):
 def connect_to_db(port_num, host_name):
     """
     connect to mysql
+
+    Parameters:
+    -----------
+    port_num : int
+        The port number.
+
+    host_name : str
+        The name of the host.
+
+    Returns:
+    -----------
+    mysql.connector.connection.MySQLConnection
+        An active connection  object to the MySQL database.
+
+    Examples:
+    -----------
+    >>> connect_to_db(3306, 'cpsc368-project-group1-init_db-1')
     """
     connection = mysql.connector.connect(
         host = host_name,
@@ -363,6 +574,23 @@ def connect_to_db(port_num, host_name):
 def load_sql_to_db(connection, sql_file_path):
     """
     load the sql file into the server
+
+    Parameters:
+    ----------- 
+    connection : mysql.connector.connection.MySQLConnection
+        An active connection  object to the MySQL database.
+
+    sql_file_path : str
+        File path to where the output sql is stored.
+
+    Returns:
+    -----------
+    bool
+        True if both files can be located and correctly writen, false otherwise.
+
+    Examples:
+    -----------
+    >>> load_sql_to_db(connect_to_db(3306, 'cpsc368-project-group1-init_db-1'), "scripts/output.sql")
     """
     cursor = connection.cursor()
 
