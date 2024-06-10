@@ -6,6 +6,23 @@ alt.renderers.enable('mimetype')
 def year_percentage_lost(connection, year_lost_path):
     """
     year and average percentage loss of bee colonies as line chart
+
+    Parameters:
+    -----------
+    connection : mysql.connector.connection.MySQLConnection
+        An active connection  object to the MySQL database.
+
+    year_lost_path : str
+        The file path to store the year and average percentage bee colony loss line chart.
+
+    Returns:
+    -----------
+    graph : alt.Chart
+        A year and average percentage bee colony loss line chart.
+
+    Examples:
+    -----------
+    >>> year_percentage_lost(mysql.connector.connect(host = 'cpsc368-project-group1-init_db-1', user = 'system', password = '123456', database = 'bee_population_analysis_db', port = 3306), "images/year_lost.png")
     """
     query = "SELECT Year, AVG(PercentLost) AS AveragePercentLost FROM Bee GROUP BY Year ORDER BY Year DESC"
 
@@ -53,6 +70,23 @@ def year_percentage_lost(connection, year_lost_path):
 def year_temperature(connection, year_temperature_path):
     """
     year and average temperature as line chart
+
+    Parameters:
+    -----------
+    connection : mysql.connector.connection.MySQLConnection
+        An active connection  object to the MySQL database.
+
+    year_temperature_path : str
+        The file path to store the year and average temperature line chart.
+
+    Returns:
+    -----------
+    graph : alt.Chart
+        A year and average temperature line chart.
+
+    Examples:
+    -----------
+    >>> year_temperature(mysql.connector.connect(host = 'cpsc368-project-group1-init_db-1', user = 'system', password = '123456', database = 'bee_population_analysis_db', port = 3306), "images/year_temperature.png")
     """
     query_temperature = "SELECT Year, AVG(AverageTemperature) AS AverageTemperature FROM MonitorStation GROUP BY Year ORDER BY Year DESC"
 
@@ -96,6 +130,23 @@ def year_temperature(connection, year_temperature_path):
 def year_pesticide(connection, year_pesticide_path):
     """
     year and average pesticide as line chart
+
+    Parameters:
+    -----------
+    connection : mysql.connector.connection.MySQLConnection
+        An active connection  object to the MySQL database.
+
+    year_temperature_path : str
+        The file path to store the year and average pesticide usage line chart.
+
+    Returns:
+    -----------
+    graph : alt.Chart
+        A year and average pesticide usage line chart.
+
+    Examples:
+    -----------
+    >>> year_pesticide(mysql.connector.connect(host = 'cpsc368-project-group1-init_db-1', user = 'system', password = '123456', database = 'bee_population_analysis_db', port = 3306), "images/year_pesticide.png")
     """
     # Query to retrieve average pesticide usage data for each year for the whole USA
     query = """
@@ -147,7 +198,24 @@ def year_pesticide(connection, year_pesticide_path):
 
 def year_AQI(connection, year_aqi_path):
     """
-    year and AQI as line chart
+    year and average AQI as line chart
+
+    Parameters:
+    -----------
+    connection : mysql.connector.connection.MySQLConnection
+        An active connection  object to the MySQL database.
+
+    year_aqi_path : str
+        The file path for storing the year and average Air Quality Index (AQI) versus various gases multiline chart.
+
+    Returns:
+    -----------
+    graph : alt.Chart
+        A year and average Air Quality Index (AQI) versus various gases multiline chart.
+
+    Examples:
+    -----------
+    >>> year_AQI(mysql.connector.connect(host = 'cpsc368-project-group1-init_db-1', user = 'system', password = '123456', database = 'bee_population_analysis_db', port = 3306), "images/year_aqi.png")
     """
     query = "SELECT Year, Name, AVG(AverageAQI) AS AverageAQI FROM GasConditions GROUP BY Year, Name ORDER BY Year, Name"
 
@@ -202,6 +270,25 @@ def year_AQI(connection, year_aqi_path):
 
 
 def top_ten_states_bee_loss(connection, state_bee_loss_path):
+    """generates a bar chart, where the top 10 states in terms of average loss in bee colonies are queried and placed on the x-axis, and the average loss in bee colonies on the y-axis. 
+
+    Parameters:
+    -----------
+    connection : mysql.connector.connection.MySQLConnection
+        An active connection  object to the MySQL database.
+
+    year_aqi_path : str
+        The file path for storing the selected states and average loss in bee colonies bar chart.
+
+    Returns:
+    -----------
+    graph : alt.Chart
+        A state and average loss in bee colonies bar chart.
+
+    Examples:
+    -----------
+    >>> year_pesticide(mysql.connector.connect(host = 'cpsc368-project-group1-init_db-1', user = 'system', password = '123456', database = 'bee_population_analysis_db', port = 3306), "images/state_bee_loss.png")
+    """
     # Query to retrieve top 10 states with the most percentage lost of bees
     query = """
         SELECT State, AVG(PercentLost) AS AveragePercentLost
@@ -253,6 +340,20 @@ def top_ten_states_bee_loss(connection, state_bee_loss_path):
 def top_ten_states(connection):
     """
     return the top 10 states with the highest avergae pencentage loss in bee colonies
+
+    Parameters:
+    -----------
+    connection : mysql.connector.connection.MySQLConnection
+        An active connection  object to the MySQL database.
+    
+    Returns:
+    -----------
+    List[str]
+        The top 10 states in terms of average loss in bee colonies.
+
+    Examples:
+    -----------
+    >>> top_ten_states(mysql.connector.connect(host = 'cpsc368-project-group1-init_db-1', user = 'system', password = '123456', database = 'bee_population_analysis_db', port = 3306))
     """
     query = """
         SELECT State, AVG(PercentLost) AS AveragePercentLost
@@ -267,7 +368,7 @@ def top_ten_states(connection):
 
     rows = cursor.fetchall()
 
-    # Extract state names from the fetched rows
+    # Extract state names from the fetched rows 
     top_10_states = [row[0] for row in rows]
 
     return top_10_states
@@ -276,6 +377,26 @@ def top_ten_states(connection):
 def fetch_percentage_diseaselost(connection, query):
     """
     Fetch data for percentage lost by disease
+
+    Parameters:
+    -----------
+    connection : mysql.connector.connection.MySQLConnection
+        An active connection  object to the MySQL database.
+
+    query: str
+        The query to execute to retrieve the year and the corresponding percentage lost due to disease.
+    
+    Returns:
+    ----------- 
+    years_lost: List[int]
+        A list of years.
+
+    percentage_lost_by_disease: List[float]
+        A list of average percentage by disease.
+
+    Examples:
+    -----------
+    >>> fetch_percentage_diseaselost(mysql.connector.connect(host = 'cpsc368-project-group1-init_db-1', user = 'system', password = '123456', database = 'bee_population_analysis_db', port = 3306), "SELECT Year, PercentLostByDisease FROM Bee WHERE State = '{state}' ORDER BY Year")
     """
     cursor = connection.cursor()
     cursor.execute(query)
@@ -289,6 +410,26 @@ def fetch_percentage_diseaselost(connection, query):
 def fetch_parasite(connection, query):
     """
     Fetch data for percentage affected by parasites
+
+    Parameters: 
+    -----------
+    connection : mysql.connector.connection.MySQLConnection
+        An active connection  object to the MySQL database.
+
+    query : str
+        The query to execute to retrieve the year and the corresponding percentage of bee colonies affected by parasites.
+
+    Returns:
+    -----------
+    years_parasite : List[int]
+        A list of years.
+
+    percentage_parasite : List[float]
+        A list of average percentage of bee colonies affected by parasites.
+
+    Examples: 
+    -----------
+    >>> fetch_parasite(mysql.connector.connect(host = 'cpsc368-project-group1-init_db-1', user = 'system', password = '123456', database = 'bee_population_analysis_db', port = 3306), "SELECT Year, PercentAffected FROM Parasit WHERE State = '{state}' ORDER BY Year")
     """
     cursor = connection.cursor()
     cursor.execute(query)
@@ -301,6 +442,32 @@ def fetch_parasite(connection, query):
 def fetch_colony_tracker(connection, query):
     """
     Fetch data for colony tracker
+
+    Parameters: 
+    -----------
+    connection : mysql.connector.connection.MySQLConnection
+        An active connection  object to the MySQL database.
+    
+    query : str
+        The query to execute to retrieve Year, Colony, LostColony, AddColony.
+    
+    Returns:
+    -----------
+    colony_years : List[int]
+        A list of years.
+
+    colony_values : List[int]
+        A list showing the current number of colonies.
+
+    lost_colonies : List[int]
+        A list showing the number of colony losses.
+
+    added_colonies : List[int]
+        A list showing the number of increases in colonies.
+
+    Examples:
+    -----------
+    >>> fetch_colony_tracker(mysql.connector.connect(host = 'cpsc368-project-group1-init_db-1', user = 'system', password = '123456', database = 'bee_population_analysis_db', port = 3306), "SELECT Year, Colony, LostColony, AddColony, FROM Bee WHERE State = '{state}' ORDER BY Year")
     """
     cursor = connection.cursor()
     cursor.execute(query)
@@ -315,6 +482,29 @@ def fetch_colony_tracker(connection, query):
 def fetch_pesticide_usage(connection, query):
     """
     Fetch pesticide usage data
+
+    Parameters: 
+    -----------
+    connection : mysql.connector.connection.MySQLConnection
+        An active connection  object to the MySQL database.
+    
+    query : str
+        The query to execute to retrieve years, low_estimate, high_estimate.
+
+    Returns:
+    -----------
+    years : List[int]
+        A list of years.
+
+    low_estimate : List[int]
+        A list showing the low estimate of pesticide usage.
+
+    high_estimate : List[int]
+        A list showing the high estimate of pesticide usage.
+
+    Examples:
+    -----------
+    >>> fetch_pesticide_usage(mysql.connector.connect(host = 'cpsc368-project-group1-init_db-1', user = 'system', password = '123456', database = 'bee_population_analysis_db', port = 3306), "SELECT Year, LowEstimate, HighEstimate FROM Pesticide WHERE State = '{state}' ORDER BY Year")
     """
     cursor = connection.cursor()
     cursor.execute(query)
@@ -328,6 +518,26 @@ def fetch_pesticide_usage(connection, query):
 def fetch_aqi(connection, query):
     """
     Fetch AQI data for each gas
+
+    Parameters:
+    -----------
+    connection : mysql.connector.connection.MySQLConnection
+        An active connection  object to the MySQL database.
+    
+    query : str
+        The query to execute to retrieve Year, Name, AverageAQI.
+    
+    Returns:
+    -----------
+    gas_data : pd.DataFrame
+        A dataframe that contains three columns, year, gas name, and the corresponding average air quality indenx(AQI).
+
+    aqi_data: List(tuple) 
+        A list of tuples, each corresponds to (query_id, Year, Name, AverageAQI).
+
+    Examples:
+    -----------
+    >>> fetch_aqi(mysql.connector.connect(host = 'cpsc368-project-group1-init_db-1', user = 'system', password = '123456', database = 'bee_population_analysis_db', port = 3306), "SELECT Year, Name, AverageAQI FROM GasConditions WHERE State = '{state}' ORDER BY Year")
     """
     cursor = connection.cursor()
     cursor.execute(query)
@@ -345,6 +555,26 @@ def fetch_aqi(connection, query):
 def fetch_temperature(connection, query):
     """
     Fetch temperature data for the state
+
+    Parameters: 
+    -----------
+    connection : mysql.connector.connection.MySQLConnection
+        An active connection  object to the MySQL database.
+
+    query : str
+        The query to execute to retrieve years and temperatures.
+
+    Returns:
+    -----------
+    years : List[int]
+        The list of years.
+
+    temperatures : List[float]
+        The list of average temperatures.
+
+    Examples:
+    -----------
+    >>> fetch_temperature(mysql.connector.connect(host = 'cpsc368-project-group1-init_db-1', user = 'system', password = '123456', database = 'bee_population_analysis_db', port = 3306), "SELECT m.Year, m.AverageTemperature FROM MonitorStation m WHERE d.BeeState = '{state}' ORDER BY m.Year"
     """
     cursor = connection.cursor()
     cursor.execute(query)
@@ -357,6 +587,32 @@ def fetch_temperature(connection, query):
 def plot_1_render(state, years_parasite, years_lost, percentage_parasite, percentage_lost_by_disease):
     """
     Plot 1: Percentage lost by disease and parasite
+
+    Parameters: 
+    -----------
+    state : str
+        The selected state (note, not all 50 states contains corresponding data).
+
+    years_parasite : List[int]
+        A list years.
+
+    years_lost : List[int]
+        A list years.
+
+    percentage_parasite : List[float]
+        A list of average percentage of bee colonies affected by parasites.
+
+    percentage_lost_by_disease : List[float]
+        A list of average percentage by disease.
+    
+    Returns:
+    -----------
+    alt.Chart
+        A multiline chart depicting the relationship between years and percentage loss, with each line representing a different type of death.
+    
+    Examples:
+    -----------
+    >>> plot_1_render(state, years_parasite, years_lost, percentage_parasite, percentage_lost_by_disease)
     """
     plot_1_data = pd.DataFrame({"year": years_parasite + years_lost,
                                 "percentage" : percentage_parasite + percentage_lost_by_disease,
@@ -381,6 +637,29 @@ def plot_1_render(state, years_parasite, years_lost, percentage_parasite, percen
 def plot_2_render(state, colony_years, colony_values, lost_colonies, added_colonies):
     """
     Plot 2: Colony tracker
+
+    Parameters:
+    -----------
+    state : str
+        The selected state (note, not all 50 states contains corresponding data).
+
+    colony_years : List[int]
+        A list years.
+    
+    lost_colonies : List[int]
+        A list showing the number of colony losses.
+
+    added_colonies : List[int]
+        A list showing the number of increases in colonies.
+
+    Returns:
+    -----------
+    alt.Chart
+        A multiline chart depicting the relationship between years and number of bee colonies, with each line representing different aspects of bee colony dynamics.
+
+    Examples:
+    -----------
+    >>> plot_2_render(state, colony_years, colony_values, lost_colonies, added_colonies)
     """
     plot_2_data = pd.DataFrame({"year": colony_years + colony_years + colony_years,
                                 "number": colony_values + lost_colonies + added_colonies,
@@ -405,7 +684,30 @@ def plot_2_render(state, colony_years, colony_values, lost_colonies, added_colon
 
 def plot_3_render(state, years, low_estimate, high_estimate):
     """
-    Plot 3: Pesticide usage 
+    Plot 3: Pesticide usage
+
+    Parameters:
+    -----------
+    state : str
+        The selected state (note, not all 50 states contains corresponding data).
+
+    years: List[int]
+        A list years.
+
+    low_estimate : List[int]
+        A list showing the low estimate of pesticide usage.
+
+    high_estimate : List[int]
+        A list showing the high estimate of pesticide usage.
+
+    Returns:
+    -----------
+    alt.Chart
+        A multiline chart depicting the relationship between years and the amount pesticide usage, with each line representing high/low estimate.
+
+    Examples:
+    -----------
+    >>> plot_3_render(state, years, low_estimate, high_estimate)
     """
     plot_3_data = pd.DataFrame({"year": years + years,
                                 "number": low_estimate + high_estimate,
@@ -431,6 +733,23 @@ def plot_3_render(state, years, low_estimate, high_estimate):
 def plot_4_render(state, aqi_data):
     """
     Plot 4: Average AQI for each gas
+
+    Parameters:
+    -----------
+    state : str
+        The selected state (note, not all 50 states contains corresponding data).
+
+    aqi_data : List(tuple)
+        A list of tuples, each corresponds to (query_id, Year, Name, AverageAQI).
+
+    Returns:
+    ----------
+    alt.Chart
+        A multiline chart depicting the relationship between years and average air quality index(AQI), with each line representing a type of gas.
+
+    Examples:
+    ----------
+    >>> plot_4_render(state, aqi_data)
     """
     plot_4_data = pd.DataFrame(aqi_data, columns = ["year", "type", "value"])
 
@@ -453,6 +772,26 @@ def plot_4_render(state, aqi_data):
 def plot_5_render(state, years, temperatures):
     """
     Plot 5: Average temperature change 
+
+    Parameters:
+    -----------
+    state : str
+        The selected state (note, not all 50 states contains corresponding data).
+
+    years : List[int]
+        A list of years.
+
+    temperatures : List[float]
+        A list of average temperatures.
+
+    Returns: 
+    -----------
+    alt.Chart
+        A line chart depicting the relationship between years and average temperatures.
+
+    Examples:
+    -----------
+    >>> plot_5_render(state, years, temperatures)
     """
     plot_5_data = pd.DataFrame({"year": years,
                                 "temperatures": temperatures})
@@ -473,6 +812,31 @@ def plot_5_render(state, years, temperatures):
 
 
 def concat_plots(plot1, plot2, plot3, plot4, path):
+    """ combine the input plots into a 2x2 grid layout
+    
+    Parameters:
+    -----------
+    plot1 : alt.Chart
+        The plot at top-left corner
+
+    plot2 : alt.Chart
+        The plot at top-right corner
+
+    plot3 : alt.Chart
+        The plot at bottom-left corner
+
+    plot4 : alt.Chart
+        The plot at bottom-right corner  
+
+    Returns:
+    -----------
+    alt.Chart
+        A chart with a 2x2 grid layout 
+
+    Examples:
+    -----------
+    >>> concat_plots(plot1, plot2, plot3, plot4, "images/the_concat_plot.png")
+    """
     v1_1 = alt.hconcat(plot1, plot2)
     v1_2 = alt.hconcat(plot3, plot4)
     plot = alt.vconcat(v1_1, v1_2)

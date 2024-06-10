@@ -5,6 +5,38 @@ import us
 def read_data(data1_origin, data2_origin, data3_origin, data4_origin):
     """
     read all four parquest files, and return them as output
+
+    Parameters:
+    -----------
+    data1_origin : str
+        The path where average_monthly_temperature_by_state_1950-2022.parquet is stored.
+
+    data2_origin : str
+        The path where epest_county_estimates.parquet is stored.
+
+    data3_origin : str
+        The path where save_the_bees.parquet is stored.
+
+    data4_origin : str
+        The path where pollution_2000_2021.parquet is stored.
+
+    Returns:
+    -----------
+    data1 : pd.DataFrame
+        The dataframe that was read from the file named average_monthly_temperature_by_state_1950-2022.parquet.
+
+    data2 : pd.DataFrame
+        The dataframe that was read from the file named epest_county_estimates.parquet.
+
+    data3 : pd.DataFrame
+        The dataframe that was read from the file named save_the_bees.parquet.
+
+    data4 : pd.DataFrame
+        The dataframe that was read from the file named pollution_2000_2021.parquet.
+
+    Examples:
+    -----------
+    >>> read_data("data/original/average_monthly_temperature_by_state_1950-2022.parquet", "data/original/epest_county_estimates.parquet", "data/original/save_the_bees.parquet", "data/original/pollution_2000_2021.parquet")
     """
     data1 = pd.read_parquet(data1_origin)
     data2 = pd.read_parquet(data2_origin)
@@ -18,6 +50,20 @@ def clean_data1(data1):
     """
     group by years and states, drop states that are missing from the other three datasets, and calculate the means. 
     Restrict the year from 2015-2019, reset the index, return the output dataframe
+
+    Parameters:
+    -----------
+    data1 : pd.DataFrame
+        The dataframe that was read from the file named average_monthly_temperature_by_state_1950-2022.parquet.
+
+    Returns:
+    -----------
+    pd.DataFrame
+        The filtered dataframe.
+    
+    Examples:
+    -----------
+    >>> clean_data1(pd.read_parquet("data/original/average_monthly_temperature_by_state_1950-2022.parquet"))
     """
     group1 = data1.groupby(["year", "state"])
     data1["average_temp"] = group1["average_temp"].transform('mean')
@@ -49,6 +95,20 @@ def clean_data2(data2):
     """
     group by years, states, and name of the comounds, drop states that are missing from the other three datasets and calculate the means. 
     decode the flps code into actual names of the states, restrict the year from 2015-2019, reset the index, return the output dataframe
+
+    Parameters:
+    -----------
+    data2 : pd.DataFrame
+        The dataframe that was read from the file named epest_county_estimates.parquet.
+
+    Returns:
+    -----------
+    pd.DataFrame
+        The filtered dataframe.
+
+    Examples:
+    -----------
+    >>> clean_data2(pd.read_parquet("data/original/epest_county_estimates.parquet"))
     """
     group2 = data2.groupby(["YEAR", "COMPOUND", "STATE_FIPS_CODE"])
     data2["EPEST_LOW_KG"] = group2["EPEST_LOW_KG"].transform('mean')
@@ -94,6 +154,20 @@ def helper_dataset(data3):
     create a intermediate dataset with two columns("percent_renovated", "percent_lost"),  
     filter out states that are not commonly shared among the existing datasets, and restrict the year 2015-2019, 
     and conduct corresponding aggregated calculation. 
+
+    Parameters:
+    -----------
+    data3 : pd.DataFrame
+        The dataframe that was read from the file named save_the_bees.parquet.
+
+    Returns:
+    -----------
+    pd.DataFrame
+        The filtered dataframe.
+
+    Examples:
+    -----------
+    >>> clean_data2(pd.read_parquet("data/original/save_the_bees.parquet"))
     """
     data_helper = data3[(data3.year >= 2015) & 
                         (data3.year <= 2019) & 
@@ -137,7 +211,24 @@ def clean_data3(data3, helper_dataset):
     group by states and years, conduct corresponding aggrgated calculation, 
     select columns that are needed, restrict the years within the range of 2015
     -2019, and filter out states that are not commonly shared among the existing datasets,
-    reset the index
+    reset the index.
+
+    Parameters:
+    -----------
+    data3 : pd.DataFrame
+        The dataframe that was read from the file named save_the_bees.parquet.
+    
+    helper_dataset: pd.DataFrame
+        A intermediate dataset with two columns("percent_renovated", "percent_lost")
+
+    Returns:
+    -----------
+    pd.DataFrame
+        The filtered dataframe.
+
+    Examples:
+    -----------
+    >>> clean_data2(pd.read_parquet("data/original/save_the_bees.parquet"), helper_dataset(pd.read_parquet("data/original/save_the_bees.parquet")))
     """
     data3 = data3.drop_duplicates()
 
@@ -196,6 +287,23 @@ def clean_data3(data3, helper_dataset):
 def helper_dataset2(data2, data3):
     """
     create a intermediate dataset with three columns("Name", "YEAR", "STATE")
+
+    Parameters:
+    -----------
+    data2 : pd.DataFrame
+        The dataframe that was read from the file named epest_county_estimates.parquet.
+
+    data3 : pd.DataFrame
+        The dataframe that was read from the file named save_the_bees.parquet.
+
+    Returns:
+    -----------
+    pd.DataFrame
+        The filtered dataframe.
+
+    Examples:
+    -----------
+    >>> helper_dataset2(pd.read_parquet("data/original/epest_county_estimates.parquet"), pd.read_parquet("data/original/save_the_bees.parquet"))
     """
     data_help_2 = data3[["state", "year", "varroa_mites"]]
     data_help_2["varroa_mites"] = "varroa_mites"
@@ -217,6 +325,20 @@ def clean_data4(data4):
     select columns that are needed, restrict the years within the range of 2015
     -2019, and filter out states that are not commonly shared among the existing datasets,
     reset the index
+
+    Parameters:
+    -----------
+    data4: pd.Dataframe
+        The dataframe that was read from the file named pollution_2000_2021.parquet.
+
+    Returns:
+    -----------
+    pd.DataFrame
+        The filtered dataframe.
+
+    Examples:
+    -----------
+    >>> clean_data4(pd.read_parquet("data/original/pollution_2000_2021.parquet"))
     """
     group4 = data4.groupby(["Year", "State"]) 
 
