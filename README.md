@@ -1,4 +1,5 @@
 # pybeepop
+[![codecov](https://codecov.io/gh/Choudoufuhezi/pybeepop/graph/badge.svg?token=UPHVWGO1C7)](https://codecov.io/gh/Choudoufuhezi/pybeepop)
 
 Assessing the Influence of Pesticide Usage, Parasitic Factors, and Climate on Honey Bee Populations in the United States (2015-2019)
 
@@ -10,7 +11,7 @@ $ pip install pybeepop
 
 ## Usage
 
-The 'pybeepop' has 4 modules ("analysis", "clean_data", "eda", and "to_ddl"), with the goal of analyzing the bee population project.
+The `pybeepop` has 4 modules ("analysis", "clean_data", "eda", and "to_ddl"), with the goal of analyzing the bee population project.
 
 ```
 from pybeepop.analysis import *
