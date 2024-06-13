@@ -1,0 +1,58 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:latest
+        ports:
+          - 3307:3306  
+        env:
+          MYSQL_ROOT_PASSWORD: 123456
+          MYSQL_USER: system
+          MYSQL_PASSWORD: 123456
+          MYSQL_DATABASE: bee_population_analysis_db
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+    - name: Set up Python 3.11.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.11.9
+
+    - name: Check-out repository
+      uses: actions/checkout@v2
+
+    - name: Install poetry
+      uses: snok/install-poetry@v1
+
+    - name: Install package
+      run: poetry install
+
+    - name: Run tests
+      env:
+        DATABASE_URL: mysql://system:123456@127.0.0.1:3307/bee_population_analysis_db
+      run: poetry run pytest tests/ --cov=pybeepop --cov-report=xml
+
+    - name: Use Codecov to track coverage
+      uses: codecov/codecov-action@v2
+      with:
+        files: ./coverage.xml   
+
+    - name: Build documentation
+      run: poetry run make html --directory docs/
+
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v4.0.1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+
+
