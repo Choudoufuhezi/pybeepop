@@ -2,6 +2,15 @@
 
 
 
+## v0.1.3 (2024-06-13)
+
+### Fix
+
+* fix: change python version in cd ([`1ca624d`](https://github.com/Choudoufuhezi/pybeepop/commit/1ca624d36954436d96a436f4e758fd3e1ea4a50f))
+
+* fix: update pyproject.toml ([`a79a42d`](https://github.com/Choudoufuhezi/pybeepop/commit/a79a42dac0350b2dd8817736e26055dde1a3ccd5))
+
+
 ## v0.1.2 (2024-06-13)
 
 ### Fix

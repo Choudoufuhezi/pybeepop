@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pybeepop"
-version = "0.1.0"
+version = "0.1.3"
 description = "Assessing the Influence of Pesticide Usage, Parasitic Factors, and Climate on Honey Bee Populations in the United States (2015-2019)"
 authors = ["Hanlin Zhao"]
 license = "MIT"
