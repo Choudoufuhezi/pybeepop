@@ -40,7 +40,7 @@ jobs:
     - name: Run tests
       env:
         DATABASE_URL: mysql://system:123456@127.0.0.1:3307/bee_population_analysis_db
-      run: poetry run pytest tests/ --cov=pycounts --cov-report=xml
+      run: poetry run pytest tests/ --cov=pybeepop --cov-report=xml
 
     - name: Use Codecov to track coverage
       uses: codecov/codecov-action@v2
