@@ -2,6 +2,19 @@
 
 
 
+## v0.1.2 (2024-06-13)
+
+### Fix
+
+* fix: fix ci-cd.yml typo ([`d7d4d7b`](https://github.com/Choudoufuhezi/pybeepop/commit/d7d4d7b069b8e43a46a1023c8b9688970fb1ddb0))
+
+### Unknown
+
+* Merge pull request #6 from Choudoufuhezi/set_ci_cd
+
+fix: fix ci-cd.yml typo ([`ceab325`](https://github.com/Choudoufuhezi/pybeepop/commit/ceab325ef0a579d4d3ebe87ed4a845b711206382))
+
+
 ## v0.1.1 (2024-06-13)
 
 ### Build
