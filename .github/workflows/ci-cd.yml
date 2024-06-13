@@ -1,20 +1,27 @@
-name: ci-cd
+name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   ci:
-    # Set up operating system
     runs-on: ubuntu-latest
 
     services:
       mysql:
         image: mysql:5.7
         ports:
-          - 3306:3306
+          - 3307:3306  
         env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: test_db
+          MYSQL_ROOT_PASSWORD: 123456
+          MYSQL_USER: system
+          MYSQL_PASSWORD: 123456
+          MYSQL_DATABASE: bee_population_analysis_db
         options: >-
           --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
@@ -45,5 +52,5 @@ jobs:
 
     - name: Run tests
       env:
-        DATABASE_URL: mysql://root:root@127.0.0.1:3306/test_db
-      run: poetry run pytest 
+        DATABASE_URL: mysql://system:123456@127.0.0.1:3307/bee_population_analysis_db
+      run: poetry run pytest
