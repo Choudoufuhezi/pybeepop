@@ -55,7 +55,7 @@ jobs:
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
 
-cd:
+  cd:
     permissions:
       id-token: write
       contents: write
